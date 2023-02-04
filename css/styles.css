@@ -12,3 +12,7 @@
     padding: 5px 10px;
   }
   
+  #map {
+    height: 500px;
+    width: 80vw;
+}
