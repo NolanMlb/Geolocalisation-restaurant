@@ -1,6 +1,6 @@
 <!DOCTYPE html lang="fr">
 <head>
-    <title>GET COORDS API</title>
+    <title>Géolocalisation de restaurants</title>
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
@@ -12,15 +12,18 @@
 <body>
 
     <form class="form-dist">
-            <label>Saisissez une distance (en kilomètres) : </label>
-            <input id="distance-input">
-            <button id="valid-form" type="submit">Valider</button>
+        <label>Saisissez une distance (en kilomètres) : </label>
+        <input id="distance-input">
+        <button id="valid-form" type="submit">Valider</button>
     </form>
 
     <div id="demo"></div>
 
-    <div id="map"></div>
+    <div class="container">
+        <div id="map"></div>
+    </div>
 </body>
+
 <script>
     const demo = document.getElementById("demo");
     const form = document.querySelector('.form-dist');
