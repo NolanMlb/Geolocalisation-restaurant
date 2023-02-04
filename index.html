@@ -1,0 +1,28 @@
+<!DOCTYPE html lang="fr">
+<head>
+    <title>GET COORDS API</title>
+</head>
+<body>
+  <div id="demo"></div>
+  <button onclick="getCoords()">GET POSITION</button>
+
+</body>
+<script>
+    const demo = document.getElementById("demo");
+    function success(pos){
+        demo.innerHTML = `Located ${pos.coords.latitude}, ${pos.coords.longitude}`
+    }
+    function error(err){
+        demo.innerHTML = `Failed to locate. Error: ${err.message}`
+    }
+    function getCoords(){
+        if(navigator.geolocation){
+            demo.innerHTML = "Locating......";
+            navigator.geolocation.getCurrentPosition(success,error);
+        }else{
+            demo.innerHTML = "Geolocation is not supported by this browser";
+        }
+    }
+</script>
+
+</html>
