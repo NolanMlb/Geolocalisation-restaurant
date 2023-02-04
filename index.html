@@ -10,14 +10,14 @@
      crossorigin=""></script>
 </head>
 <body>
-    <div id="demo"></div>
-    <button onclick="getCoords()">GET POSITION</button>
 
     <form class="form-dist">
-            <label>Saisissez une distance</label>
-            <input value="">
-            <button type="submit">Valider</button>
+        <label>Saisissez une distance (en kilomètres) : </label>
+        <input id="distance-input">
+        <button id="valid-form" type="submit">Valider</button>
     </form>
+
+    <div id="demo"></div>
 
     <div class="container">
         <div id="map"></div>
@@ -26,6 +26,11 @@
 
 <script>
     const demo = document.getElementById("demo");
+    const form = document.querySelector('.form-dist');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        getCoords();
+    });
     function success(pos){
         demo.innerHTML = `Located ${pos.coords.latitude}, ${pos.coords.longitude}`
         var map = L.map('map').setView([pos.coords.latitude, pos.coords.longitude], 13);
@@ -41,6 +46,7 @@
     function getCoords(){
         if(navigator.geolocation){
             demo.innerHTML = "Locating......";
+            const dist = document.getElementById('distance-input').value;
             navigator.geolocation.getCurrentPosition(success,error);
         }else{
             demo.innerHTML = "Geolocation is not supported by this browser";
