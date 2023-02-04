@@ -7,11 +7,12 @@
   <div id="demo"></div>
   <button onclick="getCoords()">GET POSITION</button>
 
-  <form class="form-dist">
-        <label>Saisissez une distance</label>
-        <input value="">
+  <form class="form-dist" onsubmit="getCoords(); return false;">
+        <label>Saisissez une distance : </label>
+        <input value=""><br>
         <button type="submit">Valider</button>
   </form>
+  <div id="demo"></div>
 
 </body>
 <script>
