@@ -45,7 +45,6 @@
     function getCoords(){
         if(navigator.geolocation){
             const dist = document.getElementById('distance-input').value;
-            demo.innerHTML = "Locating......";
             navigator.geolocation.getCurrentPosition(success,error);
         }else{
             demo.innerHTML = "Geolocation is not supported by this browser";
