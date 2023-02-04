@@ -1,3 +1,14 @@
-.form-dist{
-    
-}
+.form-dist {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  label {
+    margin-right: 10px;
+  }
+  
+  input, button {
+    padding: 5px 10px;
+  }
+  
