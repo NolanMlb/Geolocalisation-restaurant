@@ -1,4 +1,4 @@
-<!DOCTYPE html lang="fr">
+<html lang="fr">
 <head>
     <title>Géolocalisation de restaurants</title>
     <link rel="stylesheet" href="./css/styles.css">
@@ -23,7 +23,7 @@
         <div id="map"></div>
     </div>
 </body>
-
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
     const demo = document.getElementById("demo");
     const form = document.querySelector('.form-dist');
@@ -31,14 +31,87 @@
         event.preventDefault();
         getCoords();
     });
-    function success(pos){
-        var map = L.map('map').setView([pos.coords.latitude, pos.coords.longitude], 13);
+    function success(pos) {
+        const map = L.map('map').setView([pos.coords.latitude, pos.coords.longitude], 13);
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
-        var marker = L.marker([pos.coords.latitude, pos.coords.longitude]).addTo(map);
+        const marker = L.marker([pos.coords.latitude, pos.coords.longitude]).addTo(map);
+
+        const apiKey = 'jQyds-8txLzkpgnwQRESfJsfxF56KAjQKw6kAiZhjuKkgjsyTlCq9SxRKF87iekt2Zdcc6GWy5O2Tbm-CndAkY89B2YVlsCs7Y3XOT0b5J_MJmxYjHlAqjkBJmnvY3Yx';
+        const distance = document.getElementById('distance-input').value;
+        const url = `https://api.yelp.com/v3/businesses/search?term=restaurants&latitude=${pos.coords.latitude}&longitude=${pos.coords.longitude}&radius=${distance * 1000}&sort_by=distance`;
+        const headers = {
+            Authorization: `Bearer ${apiKey}`,
+            'Access-Control-Allow-Origin': '*',
+        };
+
+        fetch(url, { headers })
+            .then(response => response.json())
+            .then(data => {
+                const businesses = data.businesses;
+
+                const resultsContainer = document.getElementById('results-container');
+                resultsContainer.innerHTML = '';
+
+                for (let i = 0; i < businesses.length; i++) {
+                    const business = businesses[i];
+
+                    const card = document.createElement('div');
+                    card.classList.add('restaurant-card');
+
+                    const name = document.createElement('h2');
+                    name.textContent = business.name;
+                    card.appendChild(name);
+
+                    const address = document.createElement('p');
+                    address.textContent = `${business.location.address1}, ${business.location.city}, ${business.location.state} ${business.location.zip_code}`;
+                    card.appendChild(address);
+
+                    resultsContainer.appendChild(card);
+                }
+
+                localStorage.setItem('lastSearchResults', JSON.stringify(businesses));
+            })
+            .catch(error => {
+                console.error('Erreur lors de la recherche de restaurants :', error);
+            });
     }
+
+    function error(err) {
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+
+    if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(success, error);
+    } else {
+        console.error('La géolocalisation n\'est pas disponible sur ce navigateur.');
+    }
+
+    const lastSearchResults = JSON.parse(localStorage.getItem('lastSearchResults'));
+    if (lastSearchResults) {
+        const resultsContainer = document.getElementById('results-container');
+        resultsContainer.innerHTML = '';
+
+        for (let i = 0; i < lastSearchResults.length; i++) {
+            const business = lastSearchResults[i];
+
+            const card = document.createElement('div');
+            card.classList.add('restaurant-card');
+
+            const name = document.createElement('h2');
+            name.textContent = business.name;
+            card.appendChild(name);
+
+            const address = document.createElement('p');
+            address.textContent = `${business.location.address1}, ${business.location.city}, ${business.location.state} ${business.location.zip_code}`;
+            card.appendChild(address);
+
+            resultsContainer.appendChild(card);
+        }
+    }
+
     function error(err){
         demo.innerHTML = `Failed to locate. Error: ${err.message}`
     }
