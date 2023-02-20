@@ -1,13 +1,14 @@
-console.log()
-
 const demo = document.getElementById("demo");
 const form = document.querySelector('.form-dist');
+let map = null;
 form.addEventListener('submit', function(event) {
     event.preventDefault();
     getCoords();
 });
 async function success(pos) {
-    const map = L.map('map').setView([pos.coords.latitude, pos.coords.longitude], 13);
+    if (map) map.remove();
+    map = L.map('map').setView([pos.coords.latitude, pos.coords.longitude], 13);
+    console.log(map);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
