@@ -1,0 +1,58 @@
+.form-dist {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+  
+label {
+    margin-right: 10px;
+}
+  
+input, button {
+    padding: 5px 10px;
+}
+  
+label {
+    margin-right: 10px;
+}
+  
+input, button {
+    padding: 5px 10px;
+}
+  
+#map {
+    height: 500px;
+    width: 80vw;
+}
+
+.container {
+    display:flex;
+    justify-content: center;
+}
+
+.results-container {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+    padding: 3rem;
+    width: 100%;
+    h2 {
+        font-size: 1.5rem;
+    }
+    p {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (min-width: 768px) {
+
+    .form-dist {
+        flex-direction: row;
+    }
+
+    .results-container {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+    }
+}
