@@ -1,0 +1,7 @@
+Il faut créer un ficher var.js dans le dossier JS et mettre ce code :
+const process = {
+    API_KEY: "jQyds-8txLzkpgnwQRESfJsfxF56KAjQKw6kAiZhjuKkgjsyTlCq9SxRKF87iekt2Zdcc6GWy5O2Tbm-CndAkY89B2YVlsCs7Y3XOT0b5J_MJmxYjHlAqjkBJmnvY3Yx",
+};
+
+Ensuite lancer une recherche de restaurant avec une distance -> ouvrir la console du navigateur -> cliquer sur le lien de l'erreur et demander l'accès.
+Après ça, le projet fonctionnera
